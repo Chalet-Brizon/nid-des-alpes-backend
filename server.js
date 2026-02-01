@@ -22,6 +22,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // =======================
 const REVIEWS_FILE = path.join(__dirname, "reviews.json");
 const BOOKINGS_FILE = path.join(__dirname, "bookings.json"); // réservations locales
+const SETTINGS_FILE = path.join(__dirname, "settings.json");
+const STRIPE_BOOKINGS_FILE = path.join(__dirname, "stripeBookings.json");
 
 // =======================
 // Variables d'environnement
@@ -248,6 +250,61 @@ app.post("/api/bookings", (req, res) => {
 });
 
 // =======================
+// RÉSERVATIONS LOCALES + FUSION POUR FULLCALENDAR
+// =======================
+
+// GET /api/bookings
+
+// POST /api/bookings
+
+
+// =======================
+// STRIPE BOOKINGS (historique paiements)
+// =======================
+
+app.get("/api/stripeBookings", (req, res) => {
+  try {
+    const data = readJsonFile(STRIPE_BOOKINGS_FILE);
+    res.json(data);
+  } catch (err) {
+    console.error("Erreur lecture stripeBookings :", err);
+    res.status(500).json({ error: "Impossible de lire stripeBookings.json" });
+  }
+});
+
+// =======================
+// SETTINGS (ADMIN)
+// =======================
+
+// GET /api/settings
+app.get("/api/settings", (req, res) => {
+  try {
+    const settings = readJsonFile(SETTINGS_FILE);
+    res.json(settings);
+  } catch (err) {
+    console.error("Erreur lecture settings :", err);
+    res.status(500).json({ error: "Impossible de lire settings.json" });
+  }
+});
+
+// POST /api/settings
+app.post("/api/settings", (req, res) => {
+  try {
+    const body = req.body;
+
+    if (!body || !Array.isArray(body.establishments)) {
+      return res.status(400).json({ error: "Format invalide" });
+    }
+
+    writeJsonFile(SETTINGS_FILE, body);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Erreur écriture settings :", err);
+    res.status(500).json({ error: "Impossible d'écrire settings.json" });
+  }
+});
+
+// =======================
 // STRIPE : création de session de paiement
 // =======================
 
@@ -347,6 +404,7 @@ app.post("/api/chat", (req, res) => {
 
   res.json({ success: true, reply: "Merci pour votre message, nous vous répondrons rapidement." });
 });
+
 
 // =======================
 // Démarrage du serveur
