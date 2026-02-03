@@ -1,0 +1,27 @@
+{
+  "establishments": [
+    {
+      "id": "nid-des-alpes",
+      "name": "Le Nid des Alpes",
+      "description": "Un chalet chaleureux situé à Brizon / Mont-Saxonnex, idéal pour un séjour en Haute-Savoie.",
+      "logo": "/public/logo.png",
+      "whatsapp": "33762907979",
+      "codeBoite": "2108",
+      "lienAvis": "https://ton-site.netlify.app/avis",
+      "codePromoActif": false,
+      "codePromo": "",
+      "textePromo": "",
+      "templateIndex": "classic",
+      "photos": {
+        "chalet": [],
+        "salon": [],
+        "chambres": [],
+        "salleDeBain": [],
+        "vue": [],
+        "exterieur": [],
+        "parking": [],
+        "divers": []
+      }
+    }
+  ]
+}
