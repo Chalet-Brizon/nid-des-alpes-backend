@@ -1,7 +1,7 @@
 // Remplacez :
 // const { messageJ0, ... } = require("./templates.js");
 // Par :
-import templates from "./templates.js";
+import * as templates from "./templates.js";
 const {
   messageJ0,
   messageJ7,
