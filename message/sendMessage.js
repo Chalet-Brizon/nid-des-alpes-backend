@@ -14,7 +14,7 @@ const {
 // Remplacez :
 // const { sendEmail } = require("./mailer/sendEmail.js");
 // Par :
-import { sendEmail } from "./mailer/sendEmail.js";
+import { sendEmail } from "../mailer/sendEmail.js";
 
 // Remplacez :
 // const settings = require("./settings.json");
