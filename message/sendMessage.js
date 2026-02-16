@@ -19,7 +19,17 @@ import { sendEmail } from "./mailer/sendEmail.js";
 // Remplacez :
 // const settings = require("./settings.json");
 // Par :
-import settings from "./settings.json" assert { type: "json" };
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Nécessaire pour __dirname en ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Lire settings.json manuellement
+const settingsPath = path.join(__dirname, 'settings.json');
+const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf-8'));
 
 const establishment = settings.establishments[0];
 
