@@ -1,12 +1,14 @@
-// // AUTO-MESSAGES – CRON QUOTIDIEN
+// AUTO-MESSAGES – CRON QUOTIDIEN
 // ===============================
 
-require("dotenv").config();
-const cron = require("node-cron");
-const fs = require("fs");
-const path = require("path");
+import dotenv from "dotenv";
+import cron from "node-cron";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url"; // Nécessaire pour __dirname
 
-// 📌 Correctement importé depuis le dossier message
+// 📌 Importer sendMessage correctement en ESM
+import sendMessageModule from '../message/sendMessage.js';
 const {
   sendMessageJ0,
   sendMessageJ7,
@@ -14,10 +16,17 @@ const {
   sendMessageJ1,
   sendMessageJ1Depart,
   sendMessageJplus1
-} = require('../message/sendMessage.js'); 
+} = sendMessageModule;
+
+dotenv.config();
+
+// Configuration pour __dirname en ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 📌 Chemin vers ton fichier de réservations
 const RESA_FILE = path.join(process.cwd(), "data", "reservations.json");
+
 // 📌 Fonction utilitaire : différence en jours
 function diffDays(date1, date2) {
   const d1 = new Date(date1);
@@ -112,4 +121,3 @@ cron.schedule("0 8 * * *", async () => {
   saveReservations(reservations);
   console.log("✔ CRON terminé.");
 });
-// ⚠️ L'accolade fermante en trop était ici
